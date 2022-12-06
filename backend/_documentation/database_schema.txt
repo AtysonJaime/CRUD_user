@@ -1,0 +1,25 @@
+https://dbdiagram.io/d
+
+Table User {
+  id int
+  name varchar
+  email varchar
+  user_adress int
+  cpf varchar
+  pis varchar
+  senha varchar
+  created_at datetime
+}
+
+Table UserAdress {
+  id int
+  pais varchar
+  estado varchar
+  municipio varchar
+  cep varchar
+  rua varchar
+  numero varchar
+  complemento varchar
+}
+
+Ref: User.user_adress > UserAdress.id
