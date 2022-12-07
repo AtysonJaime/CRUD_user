@@ -1,40 +1,6 @@
-<template>
-  <div>
-    <nav
-      class="navbar header has-shadow is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <img src="~assets/buefy.png" alt="Buefy" height="28" />
-        </a>
-
-        <div class="navbar-burger">
-          <span />
-          <span />
-          <span />
-        </div>
-      </div>
-    </nav>
-
-    <section class="main-content columns">
-      <aside class="column is-2 section">
-        <p class="menu-label is-hidden-touch">General</p>
-        <ul class="menu-list">
-          <li v-for="(item, key) of items" :key="key">
-            <NuxtLink :to="item.to" exact-active-class="is-active">
-              <b-icon :icon="item.icon" /> {{ item.title }}
-            </NuxtLink>
-          </li>
-        </ul>
-      </aside>
-
-      <div class="container column is-10">
-        <Nuxt />
-      </div>
-    </section>
-  </div>
+<template lang="pug">
+  .main-content
+    Nuxt
 </template>
 
 <script>
@@ -58,3 +24,71 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+html,
+body {
+  overflow: hidden !important;
+}
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background: #2980b9
+    url('https://static.tumblr.com/03fbbc566b081016810402488936fbae/pqpk3dn/MRSmlzpj3/tumblr_static_bg3.png')
+    repeat 0 0;
+  -webkit-animation: 10s linear 0s normal none infinite animate;
+  -moz-animation: 10s linear 0s normal none infinite animate;
+  -ms-animation: 10s linear 0s normal none infinite animate;
+  -o-animation: 10s linear 0s normal none infinite animate;
+  animation: 10s linear 0s normal none infinite animate;
+}
+@-webkit-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 0;
+  }
+}
+
+@-moz-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 0;
+  }
+}
+
+@-ms-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 0;
+  }
+}
+
+@-o-keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 0;
+  }
+}
+
+@keyframes animate {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 500px 0;
+  }
+}
+</style>
