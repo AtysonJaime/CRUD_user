@@ -1,33 +1,32 @@
-<template>
-  <section class="section">
-    <div class="columns is-mobile">
-      <card title="Free" icon="github">
-        Open source on <a href="https://github.com/buefy/buefy"> GitHub </a>
-      </card>
-
-      <card title="Responsive" icon="cellphone-link">
-        <b class="has-text-grey"> Every </b> component is responsive
-      </card>
-
-      <card title="Modern" icon="alert-decagram">
-        Built with <a href="https://vuejs.org/"> Vue.js </a> and
-        <a href="http://bulma.io/"> Bulma </a>
-      </card>
-
-      <card title="Lightweight" icon="arrange-bring-to-front">
-        No other internal dependency
-      </card>
-    </div>
-  </section>
+<template lang="pug">
+.inside-content.box
+  <HeaderPage />
+  .body-content
+    .content-index
+      .content
+        p.subtitle Um simples sistema para cadastro e visualização de usuário.
+      .button-content
+        nuxt-link(to="/cadastro")
+          b-button(type="is-success is-large" rounded) Criar novo usuário
+        nuxt-link(to="/login")
+          b-button(type="is-primary is-light is-large" rounded) Realizar Login
 </template>
 
 <script>
-import Card from '~/components/Card'
-
+import HeaderPage from '~/components/HeaderPage.vue'
 export default {
-  name: 'IndexPage',
-  components: {
-    Card,
+  component: {
+    HeaderPage,
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.inside-content {
+  max-width: 43.75rem;
+}
+.content-index {
+  width: 100%;
+  padding: 1.875rem;
+}
+</style>
