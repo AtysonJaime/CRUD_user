@@ -4,7 +4,7 @@ from .models import User
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
-    list_display = ('name','email','cep','cpf','pis', 'is_staff','is_admin')
+    list_display = ('email','name','cep','cpf','pis', 'is_staff','is_admin')
     list_filter = ('is_admin',)
     
     fieldsets = (
