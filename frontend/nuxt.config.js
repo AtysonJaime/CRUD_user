@@ -57,22 +57,44 @@ export default {
   auth: {
     strategies: {
       local: {
+        scheme: 'refresh',
+        localStorage: {
+          prefix: 'auth.',
+        },
+        token: {
+          prefix: 'acess_token.',
+          property: 'access_token',
+          maxAge: 86400,
+          type: 'Bearer',
+        },
+        refreshToken: {
+          prefix: 'refresh_token.',
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 15,
+        },
+        user: {
+          property: 'user',
+          autoFetch: true,
+        },
         endpoints: {
           login: {
             url: '/api/token/',
             method: 'post',
-            propertyName: 'access',
-            altProperty: 'refresh',
           },
-          logout: {},
-          user: false,
+          refresh: {
+            url: '/token/refresh/',
+            method: 'post',
+          },
+          user: { url: '/user', method: 'get' },
+          logout: { url: '/logout', method: 'post' },
         },
       },
     },
   },
 
   axios: {
-    baseURL: 'http://localhost:8000/',
+    baseURL: 'http://localhost:8000/api/v1/',
   },
 
   toast: {
