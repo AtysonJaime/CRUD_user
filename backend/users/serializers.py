@@ -14,7 +14,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('email','name','password','pais','estado','municipio','cep','rua','numero','complemento','cpf','pis')
         extra_kwargs = {
-            'password': {'write_only': True, 'min_length': 8},
+            'password': {'write_only': True, 'min_length': 8, 'required': True},
             'email' : {'required': True},
             'name': {'required': True},
             'pais': {'required': True},
@@ -40,9 +40,10 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             complemento = validated_data['complemento'],
             cpf= validated_data['cpf'],
             pis= validated_data['pis'],
+            # password=validate_password(validated_data['password'])
         )
         
-        user.set_password(validate_password('password'))
+        user.set_password(validated_data['password'])
         user.save()
         
         return user
