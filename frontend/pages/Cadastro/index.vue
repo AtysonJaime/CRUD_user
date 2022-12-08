@@ -228,7 +228,7 @@ export default {
           this.$toasted.global.defaultSuccess({
             msg: `Usuário cadastrado com sucesso`,
           })
-          this.$route.push('/login')
+          this.$router.push('/login')
         } catch (err) {
           // eslint-disable-next-line no-console
           console.log(err)
