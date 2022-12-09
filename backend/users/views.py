@@ -49,6 +49,32 @@ def login(request):
     
     return response
 
+@api_view(['PUT'])
+def uptade(request):
+    userEdit= {
+        'name': request.data.get('name'),
+        'email': request.data.get('email'),
+        'pais':request.data.get('pais'),
+        'municipio':request.data.get('municipio'),
+        'cep':request.data.get('cep'),
+        'rua':request.data.get('rua'),
+        'numero':request.data.get('numero'),
+        'complemento':request.data.get('complemento'),
+        'pis':request.data.get('pis'),
+        'cpf':request.data.get('cpf'),
+    }
+    user = get_user_model().objects.filter(email=userEdit['email']).first()
+    user.name = userEdit['name']
+    user.pais = userEdit['pais']
+    user.municipio = userEdit['municipio']
+    user.cep = userEdit['cep']
+    user.rua = userEdit['rua']
+    user.numero = userEdit['numero']
+    user.complemento = userEdit['complemento']
+    user.cpf = userEdit['cpf']
+    user.pis = userEdit['pis']
+    user.save()
+    return Response({'mensagem': 'Edição concluida'})
 class CurrentLoggedInUser(ModelViewSet):
     queryset = get_user_model().objects.all()
     permission_classes = (IsAuthenticated,)

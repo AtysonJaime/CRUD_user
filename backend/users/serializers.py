@@ -47,15 +47,20 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.save()
         
         return user
+
+    def update(self, instance, validated_date):
+        print(self, instance, validated_date)
     
 class UserSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return get_user_model().objects.create_user(**validated_data)
-    
+
+        # user = get_user_model().objects.filter(email=login).first()
+        
     class Meta:
         model = get_user_model()
-        fields = ('email','name','password','pais','estado','municipio','cep','rua','numero','complemento','cpf','pis')
+        fields = ('id','email','name','password','pais','estado','municipio','cep','rua','numero','complemento','cpf','pis')
         extra_kwargs = {
             'password': {'write_only': True, 'min_length': 8, 'required': True},
             'email' : {'required': True},
