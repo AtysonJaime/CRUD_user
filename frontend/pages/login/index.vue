@@ -10,25 +10,27 @@
             b-tooltip(label='Acessar utilizando Email, CPF ou PIS')
               b-input(v-model='user.login' icon='account' rounded placeholder='Digite seu login...')
           b-field(label="Senha")
-            b-input(type="password" v-model='user.senha' pack='fas' icon='lock' password-reveal rounded placeholder='Digite sua senha...')
+            b-input(type="password" v-model='user.password' pack='fas' icon='lock' password-reveal rounded placeholder='Digite sua senha...')
         .button-content
           nuxt-link(to="/cadastro")
             b-button(type="is-primary is-light is-large" rounded) Criar usuário
-          b-button(type="is-success is-light is-large" rounded @click='login') Entrar
+          b-button(type="is-success is-large" rounded @click='login' :loading='isLoading') Entrar
 
 
 
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import HeaderPage from '~/components/HeaderPage.vue'
 export default {
   data() {
     return {
       image: require('~/assets/logo.png'),
+      isLoading: false,
       user: {
         login: '',
-        senha: '',
+        password: '',
       },
     }
   },
@@ -38,19 +40,37 @@ export default {
   head: {
     title: 'CRUD User - Login',
   },
+  computed: {
+    ...mapState('auth', ['loggedIn']),
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push('/user')
+    }
+  },
   methods: {
     async login() {
+      this.isLoading = true
       try {
-        await this.$auth.loginWith('local', {
+        const response = await this.$auth.loginWith('local', {
           data: this.user,
         })
+        // Guarda no localStorege
+        this.$auth.$storage.setUniversal('email', response.data.email)
+        this.$auth.setUser(response.data)
+        await this.$auth.setUserToken(
+          response.data.access_token,
+          response.data.refresh_token
+        )
         this.$toasted.global.defaultSuccess({
           msg: 'Usuário autenticado com sucesso',
         })
       } catch (err) {
+        this.isLoading = false
         this.$toasted.global.defaultError({
           msg: 'Usuário ou senha inválidos.',
         })
+        console.log(err.message)
       }
     },
   },

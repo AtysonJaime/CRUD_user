@@ -13,10 +13,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import HeaderPage from '~/components/HeaderPage.vue'
 export default {
   component: {
     HeaderPage,
+  },
+  computed: {
+    ...mapState('auth', ['loggedIn']),
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push('/user')
+    }
   },
 }
 </script>
