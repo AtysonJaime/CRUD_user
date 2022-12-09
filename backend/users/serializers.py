@@ -47,3 +47,25 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.save()
         
         return user
+    
+class UserSerializer(serializers.ModelSerializer):
+    
+    def create(self, validated_data):
+        return get_user_model().objects.create_user(**validated_data)
+    
+    class Meta:
+        model = get_user_model()
+        fields = ('email','name','password','pais','estado','municipio','cep','rua','numero','complemento','cpf','pis')
+        extra_kwargs = {
+            'password': {'write_only': True, 'min_length': 8, 'required': True},
+            'email' : {'required': True},
+            'name': {'required': True},
+            'pais': {'required': True},
+            'estado': {'required': True},
+            'municipio': {'required': True},
+            'cep': {'required': True},
+            'rua': {'required': True},
+            'numero': {'required': True},
+            'cpf': {'required': True},
+            'pis': {'required': True},
+        }
