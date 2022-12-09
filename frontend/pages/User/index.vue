@@ -6,9 +6,9 @@
       .content
         p.subtitle Ola <b>{{this.user.name}}</b>
       .button-content
-        b-button(type="is-dark is-large" rounded @click='logout') Deslogar
+        b-button(type="is-dark is-large" icon-left='exit-to-app' rounded @click='logout') Deslogar
         nuxt-link(to="/user/edit")
-          b-button(type="is-info is-large" rounded) Editar cadastro
+          b-button(type="is-info is-large" icon-left="pencil" rounded) Editar
 </template>
 
 <script>
@@ -43,9 +43,11 @@ export default {
 <style lang="scss" scoped>
 .inside-content {
   max-width: 43.75rem;
+  overflow: auto;
+  height: 80vh;
 }
 .content-index {
   width: 100%;
-  padding: 1.875rem;
+  padding: 0.625rem;
 }
 </style>

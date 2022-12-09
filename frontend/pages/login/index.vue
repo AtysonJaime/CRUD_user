@@ -13,8 +13,8 @@
             b-input(type="password" v-model='user.password' pack='fas' icon='lock' password-reveal rounded placeholder='Digite sua senha...')
         .button-content
           nuxt-link(to="/cadastro")
-            b-button(type="is-primary is-light is-large" rounded) Criar usuário
-          b-button(type="is-success is-large" rounded @click='login' :loading='isLoading') Entrar
+            b-button(type="is-primary is-light is-large" icon-left='pencil' rounded) Criar usuário
+          b-button(type="is-success is-large" rounded @click='login' icon-left='login-variant' :loading='isLoading') Entrar
 
 
 
@@ -79,11 +79,13 @@ export default {
 
 <style lang="scss" scoped>
 .inside-content {
-  max-width: 31.25rem;
+  max-width: 37.5rem;
+  overflow: auto;
+  height: 80vh;
 }
 .content-login {
   width: 100%;
-  padding: 1.875rem;
+  padding: 0.625rem;
 
   .content {
     .header {

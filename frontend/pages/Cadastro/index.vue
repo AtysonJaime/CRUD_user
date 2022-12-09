@@ -7,8 +7,6 @@
                 p.subtitle Realize seu cadastro.
             .form-cadastro
                 .content-field
-                    //- :type="{ 'is-danger': hasError }"
-                    //- :message="{ 'Username is not available': hasError }"
                     b-field(label='Nome' :type="{'is-danger':error.name !== ''}" :message='error.name')
                         b-input(v-model='user.name' rounded require)
                     b-field(label="E-Mail" :type="{'is-danger':error.email !== ''}" :message='error.email')
@@ -44,8 +42,8 @@
                         b-input(v-model='user.pis' rounded v-cleave='marks.pis' max-length='18')
             .button-content
                 nuxt-link(to="/login")
-                    b-button(type="is-danger is-light is-large" rounded) Cancelar
-                b-button(type="is-success is-light is-large" rounded @click='cadastrar') Cadastrar
+                    b-button(type="is-danger is-light is-large" icon-left='arrow-left' rounded) Cancelar
+                b-button(type="is-success is-light is-large" icon-left="pencil" rounded @click='cadastrar') Cadastrar
 </template>
 
 <script>
@@ -257,7 +255,7 @@ export default {
 }
 .content-cadastro {
   width: 100%;
-  padding: 1.875rem;
+  padding: 0.625rem;
   .form-cadastro {
     margin-bottom: 1.25rem;
     .b-tooltip {
@@ -266,7 +264,10 @@ export default {
     .content-field {
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
+
+      @media (max-width: '700px') {
+        flex-wrap: wrap;
+      }
 
       .field {
         width: 100%;
