@@ -52,7 +52,12 @@ export default {
     '@nuxtjs/stylelint-module',
   ],
 
-  modules: ['nuxt-buefy', '@nuxtjs/axios', '@nuxtjs/auth', '@nuxtjs/toast'],
+  modules: [
+    'nuxt-buefy',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next',
+    '@nuxtjs/toast',
+  ],
 
   auth: {
     strategies: {
@@ -62,7 +67,7 @@ export default {
           prefix: 'auth.',
         },
         token: {
-          prefix: 'acess_token.',
+          prefix: 'access_token.',
           property: 'access_token',
           maxAge: 86400,
           type: 'Bearer',
@@ -78,14 +83,8 @@ export default {
           autoFetch: true,
         },
         endpoints: {
-          login: {
-            url: '/api/token/',
-            method: 'post',
-          },
-          refresh: {
-            url: '/token/refresh/',
-            method: 'post',
-          },
+          login: { url: '/login', method: 'post' },
+          refresh: { url: '/token/refresh/', method: 'post' },
           user: { url: '/user', method: 'get' },
           logout: { url: '/logout', method: 'post' },
         },
