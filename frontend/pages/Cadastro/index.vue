@@ -120,6 +120,9 @@ export default {
       ahError: false,
     }
   },
+  head: {
+    title: 'CRUD User - Usuário',
+  },
   methods: {
     replaceItens(s) {
       let item = s
