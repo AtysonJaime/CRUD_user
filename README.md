@@ -83,7 +83,9 @@ _OBS: é necessario ter o node e npm já instalado em sua maquina._
 
 3. Pronto, o projeto frontend estará rodando na porta 3000
 
-## 🚀 Deploy
+## 🖼️ Layout
+
+O Layout desenvolvido para o sistema foi desenvolvido e pensando utilizando minhas experiencias com UX e outras aplicações desenvolvidas por mim.
 
 ## 📝 Licença
 
