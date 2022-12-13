@@ -44,7 +44,7 @@ _OBS2: é necessario ter um arquivo .env na pasta backend/core contendo a SECRET
 3. Quando ativado, irá aparecer um (venv) na linha de comando do terminal. quando isso acontecer é so seguir os seguintes comandos:
 
    ```python
-   pip install
+   pip install -r requirements.txt
    ```
 
    ```python
