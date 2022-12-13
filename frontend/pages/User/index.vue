@@ -35,7 +35,6 @@ export default {
   methods: {
     async logout() {
       await this.$auth.logout().then(() => {
-        this.$router.push('/login')
         this.$toasted.global.defaultSuccess({
           msg: 'Usuário deslogado com sucesso',
         })

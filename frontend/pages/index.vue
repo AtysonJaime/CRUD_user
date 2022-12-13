@@ -25,6 +25,8 @@ export default {
   created() {
     if (this.loggedIn) {
       this.$router.push('/user')
+    } else {
+      this.$router.push('/login')
     }
   },
 }

@@ -87,6 +87,20 @@ def uptade(request):
         user.set_password(userEdit['password'])
     user.save()
     return Response({'mensagem': 'Edição concluida'})
+
+@api_view(['POST'])
+def logout(request):
+    return Response({'mensagem': 'Deslogado com Sucesso'})
+
+@api_view(['POST'])
+def delete(request):
+    email = request.data.get('email')
+    user = get_user_model().objects.filter(email=email).first()
+    if user is None:
+        raise exceptions.AuthenticationFailed('Usuário não encontrado!')
+    user.delete()
+    return Response({'mensagem': 'Usuário Deletado'})
+
 class CurrentLoggedInUser(ModelViewSet):
     queryset = get_user_model().objects.all()
     permission_classes = (IsAuthenticated,)

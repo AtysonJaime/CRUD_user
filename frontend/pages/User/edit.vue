@@ -49,7 +49,7 @@
             .button-content
                 nuxt-link(to="/user")
                     b-button(type="is-danger is-light is-large" icon-left='arrow-left' rounded) Cancelar
-                b-button(type="is-danger is-large" icon-left="delete" rounded :loading='isLoadingDel') Deletar
+                b-button(type="is-danger is-large" icon-left="delete" rounded @click='deletarConfirmacao' :loading='isLoadingDel') Deletar
                 b-button(type="is-info is-large" icon-left="pencil" rounded @click='editar' :loading='isLoading') Editar
 </template>
 
@@ -152,7 +152,8 @@ export default {
     this.userEdit.cep = this.user.cep
     this.userEdit.rua = this.user.rua
     this.userEdit.numero = this.user.numero
-    this.userEdit.complemento = this.user.complemento
+    this.userEdit.complemento =
+      this.user.complemento === 'vazio' ? '' : this.user.complemento
     this.userEdit.cpf = this.user.cpf
     this.userEdit.pis = this.user.pis
   },
@@ -298,6 +299,50 @@ export default {
           msg: 'Formulário apresenta algum erro, por favor verificar.',
         })
       }
+    },
+    deletarConfirmacao() {
+      this.isLoadingDel = true
+      this.$buefy.dialog.confirm({
+        title: 'Deletando conta',
+        message:
+          'Você tem certeza que deseja deletar a conta para o usuario ' +
+          this.user.name +
+          ' ?',
+        confirmText: 'Deletar Conta',
+        cancelText: 'Cancelar',
+        type: 'is-danger',
+        hasIcon: true,
+        onConfirm: () => this.deletar(),
+      })
+    },
+    async deletar() {
+      await this.$auth
+        .logout()
+        .then(async () => {
+          await this.$axios
+            .post('/delete', { email: this.userEdit.email })
+            .then(() => {
+              this.$toasted.global.defaultSuccess({
+                msg: `Usuário deletado com sucesso`,
+              })
+            })
+            .catch((err) => {
+              this.$toasted.global.defaultSuccess({
+                msg: `Erro ao deleter usuário`,
+              })
+              // eslint-disable-next-line no-console
+              console.log(err)
+              this.isLoadingDel = false
+            })
+        })
+        .catch((err) => {
+          this.$toasted.global.defaultSuccess({
+            msg: `Erro ao deleter usuário`,
+          })
+          // eslint-disable-next-line no-console
+          console.log(err)
+          this.isLoadingDel = false
+        })
     },
   },
 }

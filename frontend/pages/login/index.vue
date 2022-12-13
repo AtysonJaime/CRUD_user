@@ -51,28 +51,28 @@ export default {
   methods: {
     async login() {
       this.isLoading = true
-      try {
-        const response = await this.$auth.loginWith('local', {
+      await this.$auth
+        .loginWith('local', {
           data: this.user,
         })
-        // Guarda no localStorege
-        this.$auth.$storage.setUniversal('email', response.data.email)
-        this.$auth.setUser(response.data)
-        await this.$auth.setUserToken(
-          response.data.access_token,
-          response.data.refresh_token
-        )
-        this.$toasted.global.defaultSuccess({
-          msg: 'Usuário autenticado com sucesso',
+        .then(async (response) => {
+          this.$auth.setUser(response.data)
+          await this.$auth.setUserToken(
+            response.data.access_token,
+            response.data.refresh_token
+          )
+          this.$toasted.global.defaultSuccess({
+            msg: 'Usuário autenticado com sucesso',
+          })
         })
-      } catch (err) {
-        this.isLoading = false
-        this.$toasted.global.defaultError({
-          msg: 'Usuário ou senha inválidos.',
+        .catch((err) => {
+          this.isLoading = false
+          this.$toasted.global.defaultError({
+            msg: `Login ou Senha incorretas`,
+          })
+          // eslint-disable-next-line no-console
+          console.log(err)
         })
-        // eslint-disable-next-line no-console
-        console.log(err.message)
-      }
     },
   },
 }
