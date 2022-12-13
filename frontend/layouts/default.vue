@@ -10,6 +10,11 @@ export default {
 </script>
 
 <style lang="scss">
+body,
+html {
+  overflow: auto !important;
+}
+
 .main-content {
   display: flex;
   justify-content: center;
