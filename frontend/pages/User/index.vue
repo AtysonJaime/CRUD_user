@@ -4,7 +4,7 @@
   .body-content
     .content-index
       .content
-        p.subtitle Ola <b>{{this.user.name}}</b>
+        p.subtitle Olá <b>{{this.user.name}}</b>
       .button-content
         b-button(type="is-dark is-large" icon-left='exit-to-app' rounded @click='logout') Deslogar
         nuxt-link(to="/user/edit")
@@ -34,7 +34,12 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$auth.logout()
+      await this.$auth.logout().then(() => {
+        this.$router.push('/login')
+        this.$toasted.global.defaultSuccess({
+          msg: 'Usuário deslogado com sucesso',
+        })
+      })
     },
   },
 }

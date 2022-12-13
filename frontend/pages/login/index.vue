@@ -4,11 +4,11 @@
     .body-content
       .content-login
         .content
-          p.subtitle Bem vindo, visitante!
+          p.subtitle Olá visitante, bem vindo!
         .form-login
           b-field(label='Login')
-            b-tooltip(label='Acessar utilizando Email, CPF ou PIS')
-              b-input(v-model='user.login' icon='account' rounded placeholder='Digite seu login...')
+            b-tooltip(label='Acessar utilizando E-mail, CPF ou PIS')
+              b-input(v-model='user.login' icon='account' rounded placeholder='Digite seu E-mail, CPF ou PIS')
           b-field(label="Senha")
             b-input(type="password" v-model='user.password' pack='fas' icon='lock' password-reveal rounded placeholder='Digite sua senha...')
         .button-content
@@ -70,6 +70,7 @@ export default {
         this.$toasted.global.defaultError({
           msg: 'Usuário ou senha inválidos.',
         })
+        // eslint-disable-next-line no-console
         console.log(err.message)
       }
     },
