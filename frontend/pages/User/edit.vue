@@ -7,8 +7,22 @@
                 p.subtitle Edite suas informações <b>{{user.name}}</b>
             .form-cadastro
                 .content-field
+                  b-field(label='Deseja alterar a senha ?')
+                    b-switch(type='is-success' v-model="userEdit.changeSenha" true-value="Sim" false-value="Não") {{userEdit.changeSenha}}
+                  b-field(label='Deseja alterar o E-mail ?')
+                    b-switch(type='is-success' v-model="userEdit.changeEmail" true-value="Sim" false-value="Não") {{userEdit.changeEmail}}
+                .content-field
                     b-field(label='Nome' :type="{'is-danger':error.name !== ''}" :message='error.name')
                         b-input(v-model='userEdit.name' rounded require)
+                    b-field(v-show='userEdit.changeEmail === "Sim"' label="E-Mail" :type="{'is-danger':error.email !== ''}" :message='error.email')
+                        b-input(type="email" v-model='userEdit.newEmail' rounded require)
+
+                .content-field(v-show='userEdit.changeSenha === "Sim"')
+                    b-field(label='Senha' :type="{'is-danger':error.password !== ''}" :message='error.password')
+                        b-tooltip(label='Senha precisar ter mais que 8 digitos e conter @!_- e letras e numeros')
+                            b-input(type='password' v-model='userEdit.password' rounded require password-reveal)
+                    b-field(label="Confirme a Senha" :type="{'is-danger':error.confirmepassword !== ''}" :message='error.confirmepassword')
+                        b-input(type='password' v-model='userEdit.confirmepassword' rounded require password-reveal)
                 .content-field
                     b-field(label='País' :type="{'is-danger':error.pais !== ''}" :message='error.pais')
                         b-input(v-model='userEdit.pais' rounded require)
@@ -68,6 +82,9 @@ export default {
       userEdit: {
         name: '',
         email: '',
+        newEmail: '',
+        changeEmail: 'Não',
+        changeSenha: 'Não',
         password: '',
         confirmepassword: '',
         pais: '',
@@ -128,6 +145,7 @@ export default {
   mounted() {
     this.userEdit.name = this.user.name
     this.userEdit.email = this.user.email
+    this.userEdit.newEmail = this.user.email
     this.userEdit.pais = this.user.pais
     this.userEdit.estado = this.user.estado
     this.userEdit.municipio = this.user.municipio
@@ -149,6 +167,53 @@ export default {
         .replace('-', '')
         .replace('/', '')
       return item
+    },
+    validaFormTypeEmail() {
+      const RegEx = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/
+
+      if (this.userEdit.newEmail === '') {
+        this.error.email = 'Esse campo é obrigatorio'
+        this.ahError = true
+      } else if (!RegEx.test(this.userEdit.newEmail)) {
+        this.error.email = 'Adicione um email valido'
+        this.ahError = true
+      } else {
+        this.error.email = ''
+      }
+    },
+    validaFormTypePassword() {
+      const RegEx = /[-.@!_]/
+      if (this.userEdit.password === '') {
+        this.error.password = 'Campo é obrigatorio'
+        this.ahError = true
+      } else {
+        const error = []
+        let ahErroAqui = false
+        if (!RegEx.test(this.userEdit.password)) {
+          error.push('Campo precisar conter um dos seguintes caracteres: @!_-')
+          this.ahError = true
+          ahErroAqui = true
+        }
+        if (this.userEdit.password.length < 8) {
+          error.push('Campo precisar ter no minimo 8 caracteres')
+          this.ahError = true
+          ahErroAqui = true
+        }
+        if (ahErroAqui) {
+          this.error.password = error
+        } else {
+          this.error.password = ''
+        }
+      }
+      if (this.userEdit.confirmepassword === '') {
+        this.error.confirmepassword = 'Campo é obrigatorio'
+        this.ahError = true
+      } else if (this.userEdit.confirmepassword !== this.userEdit.password) {
+        this.error.confirmepassword = 'As senhas estão diferentes'
+        this.ahError = true
+      } else {
+        this.error.confirmepassword = ''
+      }
     },
     validaFormTypeText(inputName) {
       if (this.userEdit[inputName] === '') {
@@ -178,6 +243,12 @@ export default {
       this.validaFormTypeText('numero')
       this.validaFormTypeNumber('cpf', 14)
       this.validaFormTypeNumber('pis', 18)
+      if (this.userEdit.changeEmail === 'Sim') {
+        this.validaFormTypeEmail()
+      }
+      if (this.userEdit.changeSenha === 'Sim') {
+        this.validaFormTypePassword()
+      }
     },
     async editar() {
       this.ahError = false
@@ -197,10 +268,22 @@ export default {
           const res = await this.$axios.put('/update', data)
           // eslint-disable-next-line no-console
           console.log(res)
-          this.$toasted.global.defaultSuccess({
-            msg: `Informações editadas com sucesso`,
-          })
-          // this.$router.push('/login')
+          this.$axios
+            .get('/user')
+            .then((resposta) => {
+              this.$auth.setUser(resposta.data.user)
+              this.$toasted.global.defaultSuccess({
+                msg: `Informações editadas com sucesso`,
+              })
+              this.$router.push('/user')
+            })
+            .catch((err) => {
+              this.$toasted.global.defaultSuccess({
+                msg: `Algo deu errado ao salvar edição, verificar console`,
+              })
+              // eslint-disable-next-line no-console
+              console.log(err)
+            })
         } catch (err) {
           // eslint-disable-next-line no-console
           console.log(err)

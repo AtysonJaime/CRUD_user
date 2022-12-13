@@ -54,8 +54,13 @@ def uptade(request):
     userEdit= {
         'name': request.data.get('name'),
         'email': request.data.get('email'),
+        'changeEmail': request.data.get('changeEmail') == 'Sim',
+        'newEmail': request.data.get('newEmail'),
+        'password': request.data.get('password'),
+        'changeSenha': request.data.get('changeSenha') == 'Sim',
         'pais':request.data.get('pais'),
         'municipio':request.data.get('municipio'),
+        'estado':request.data.get('estado'),
         'cep':request.data.get('cep'),
         'rua':request.data.get('rua'),
         'numero':request.data.get('numero'),
@@ -64,15 +69,22 @@ def uptade(request):
         'cpf':request.data.get('cpf'),
     }
     user = get_user_model().objects.filter(email=userEdit['email']).first()
+    if user is None:
+        raise exceptions.AuthenticationFailed('Usuário não encontrado!')
     user.name = userEdit['name']
+    if(userEdit['changeEmail']):
+        user.email = userEdit['newEmail']
     user.pais = userEdit['pais']
     user.municipio = userEdit['municipio']
     user.cep = userEdit['cep']
+    user.estado = userEdit['estado']
     user.rua = userEdit['rua']
     user.numero = userEdit['numero']
     user.complemento = userEdit['complemento']
     user.cpf = userEdit['cpf']
     user.pis = userEdit['pis']
+    if(userEdit['changeSenha']): 
+        user.set_password(userEdit['password'])
     user.save()
     return Response({'mensagem': 'Edição concluida'})
 class CurrentLoggedInUser(ModelViewSet):
