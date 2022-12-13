@@ -85,7 +85,7 @@ _OBS: é necessario ter o node e npm já instalado em sua maquina._
 
 ## 🖼️ Layout
 
-O Layout desenvolvido para o sistema foi desenvolvido e pensando utilizando minhas experiencias com UX e outras aplicações desenvolvidas por mim.
+O Layout apresentado para o sistema foi desenvolvido e pensando utilizando minhas experiencias com UX e outras aplicações desenvolvidas por mim.
 
 ## 📝 Licença
 
