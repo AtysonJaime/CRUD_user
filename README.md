@@ -3,7 +3,7 @@
 ![GitHub](https://img.shields.io/badge/Atysonjaime-CRUD__User-9cf)
 ![GitHub](https://img.shields.io/github/license/atysonjaime/CRUD_User)
 
-> 👤 Projeto fullstack com o intuito de realizar uma simples aplicação para cadastro de usuários.
+> 👤 Projeto fullstack com o intuito de realizar uma simples aplicação para cadastro de usuários. Possibilitando a criação, edição e exclusão. Possue um sistema de login simples, no qual, utiliza o email, cpf ou o pis como forma de acesso para a aréa do usuario.
 >
 > Projeto proposto como desáfio tecnico para a empresa [PontoTel](https://www.pontotel.com.br/).
 
